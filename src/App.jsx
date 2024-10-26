@@ -1,9 +1,23 @@
-import { useRef, useState } from "react";
+import { createContext, useRef, useState } from "react";
+
 
 import Sidebar from "./components/Sidebar";
 import Home from "./components/Home";
 import NewProject from "./components/NewProject";
 import Project from "./components/Project";
+import ProjectDataContextProvider from "./store/projectDataContext";
+
+export const ProjectDataContext = createContext(
+  {
+    data: {},
+    onAddTask: () => {},
+    onDeleteTask: () => {},
+    onDeleteProject: () => {},
+    onSave: () => {},
+    onCancel: () => {},
+    onSelectProject: () => {},
+  }
+);
 
 function App() {
   const inputRef = useRef();
@@ -114,16 +128,22 @@ function App() {
   } else if (projectData.selectedProject === undefined) {
     content = <Home onCreate={handleAddProject}/>;
   } else {
-    content = <Project projectTask={projectData.selectedProject.tasks} onAddTask={handleAddTask} onDeleteTask={handleDeleteTask} onDelete={handleDeleteProject} selectedProject={projectData.selectedProject}/>
+    content = <Project onDelete={handleDeleteProject} selectedProject={projectData.selectedProject}/>
+  }
+
+  const ctxValue = {
+    tasks: projectData.selectedProject ? projectData.selectedProject.tasks : [],
+    onAddTask: handleAddTask,
+    onDeleteTask: handleDeleteTask,
   }
 
   return (
-    <>
+    <ProjectDataContext.Provider value={ctxValue}>
       <div className='flex h-screen w-screen bg-yellow-400'>
         <Sidebar openSelectedProject={handleSelectedProject} data={projectData} onAdd={handleAddProject}/>
         {content}
       </div>
-    </>
+    </ProjectDataContext.Provider>
   );
 }
 

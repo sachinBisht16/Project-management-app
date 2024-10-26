@@ -1,15 +1,17 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Task from "./Task";
+import { ProjectDataContext } from "../App";
 
-export default function Tasks ({addTask, tasks, deleteTask}) {
+export default function Tasks () {
     const [enteredTask, setEnteredTask] = useState('');
 
+    const  {tasks, onAddTask}  = useContext(ProjectDataContext);
     function handleEnteredTask (e) {
         setEnteredTask(e.target.value);
     }
 
     function handleClick () {
-        addTask(enteredTask);
+        onAddTask(enteredTask);
         setEnteredTask('');
     }
 
@@ -21,7 +23,7 @@ export default function Tasks ({addTask, tasks, deleteTask}) {
                 <button className='bg-black text-white rounded-sm p-1 font-medium hover:bg-white hover:text-black' onClick={handleClick}>Add Tasks</button>
             </div>
             {tasks.length == 0 && <p className="text-xl mt-5">Currently no task has been added</p>}
-            {tasks.length > 0 && <Task deleteTask={deleteTask} tasks={tasks} />}
+            {tasks.length > 0 && <Task />}
         </section>
     )
 }

@@ -1,6 +1,6 @@
 import Tasks from "./Tasks";
 
-export default function Project( {onAddTask, onDeleteTask, selectedProject, onDelete, projectTask} ) {
+export default function Project( {selectedProject, onDelete} ) {
     return (
         <div className="flex flex-col ml-10 mt-10">
             <div className="flex justify-between">
@@ -9,7 +9,7 @@ export default function Project( {onAddTask, onDeleteTask, selectedProject, onDe
             </div>
             <p className="text-2xl my-3">{selectedProject.date}</p>
             <p className="text-xl bg-yellow-200 h-1/6">{selectedProject.description}</p>
-            <Tasks tasks={projectTask} addTask={onAddTask} deleteTask={onDeleteTask}/>
+            <Tasks />
         </div>
     )
 }
