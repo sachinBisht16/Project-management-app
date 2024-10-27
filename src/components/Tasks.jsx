@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import Task from "./Task";
-import { ProjectDataContext } from "../App";
+import { ProjectDataContext } from "../store/projectDataContext";
 
 export default function Tasks () {
     const [enteredTask, setEnteredTask] = useState('');
